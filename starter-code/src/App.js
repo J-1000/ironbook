@@ -5,28 +5,32 @@ import { v4 as uuidv4 } from "uuid";
 
 class App extends React.Component {
   state = {
-    displayedUsers: users,
     query: "",
+    student: true,
+    teacher: true
   };
 
-  searchHandler(event) {
-    let query = event.target.value.toLowerCase();
-    this.setState({query: query});
-    let displayedUsersCopy = users.filter(
-      (user) =>
-        user.firstName.toLowerCase().includes(query) ||
-        user.lastName.toLowerCase().includes(query)
+  filterUsers(query) {
+    return users.filter(
+      (user) => {
+        if (query === "") return this.state[user.role];
+        let fullName = user.firstName + " " + user.lastName;
+        return this.state[user.role] && fullName.toLowerCase().includes(query);
+      }
     );
-    if (this.state.query === "") {
-      displayedUsersCopy = users;
-    }
+  }
+
+  inputHandler(event) {
+    const target = event.target;
+    const name = target.name;
+    const value = target.type === 'checkbox' ? target.checked : target.value.toLowerCase();
     this.setState(() => ({
-      displayedUsers: displayedUsersCopy,
+      [name]: value,
     }));
   }
 
   render() {
-    const usersRender = this.state.displayedUsers.map((user) => {
+    const usersRender = this.filterUsers(this.state.query).map((user) => {
       const id = uuidv4();
       return (
         <tr key={id}>
@@ -59,8 +63,22 @@ class App extends React.Component {
             aria-label="query"
             aria-describedby="basic-addon1"
             value={this.state.query}
-            onChange={(event) => this.searchHandler(event)}
+            onChange={(event) => this.inputHandler(event)}
           />
+        </div>
+        <div className="d-flex justify-content-center">
+          <div className="form-check m-2">
+            <label className="form-check-label" htmlFor="studentCheck">
+              Student
+            </label>
+            <input className="form-check-input" name="student" checked={this.state.student} type="checkbox" id="studentCheck" onChange={event => this.inputHandler(event)}/>
+          </div>
+          <div className="form-check m-2">
+            <label className="form-check-label" htmlFor="flexCheckChecked">
+              Teacher
+            </label>
+            <input className="form-check-input" name="teacher" checked={this.state.teacher} type="checkbox" id="flexCheckChecked" onChange={event => this.inputHandler(event)}/>
+          </div>
         </div>
         <table className="table table-sm table-hover">
           <thead>
@@ -80,35 +98,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-{
-  /* <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table> */
-}
