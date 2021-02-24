@@ -9,24 +9,35 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        search: ''
+        myUsers: users,
+        search: '',
+        isStudent: false,
+        isTeacher: false
     }
   }
 
-  handleSearch = event => {
-    const name = event.target.value;
-    console.log(name)
+  handleChange = event => {
+    const name = event.target.name;
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     this.setState({
-      search: name
+      [name]: value
     })
   }
 
+
   render() {
     const stateLowerCase = this.state.search.toLowerCase();
-    const filtered = users.filter(element => {
+    const searchFiltered = users.filter(element => {
       return (this.state.search === '' ? true: ( element.firstName.toLowerCase().includes(stateLowerCase)|| element.lastName.toLowerCase().includes(stateLowerCase)))
     })
-    const list = filtered.map((user,index) => {
+    const searchStudent = searchFiltered.filter(element => {
+      return (this.state.isStudent === false ? true: element.role === "student")
+    })
+    const searchTeacher = searchStudent.filter(element => {
+      return (this.state.isTeacher === false ? true: element.role === "teacher")
+    })
+
+    const list = searchTeacher.map((user,index) => {
       return (
         <tr key={user.id} style={{width: '1000px', display:'flex', alignItems: 'center'}}>
           <p style={{width: '200px'}}>{user.firstName}</p>
@@ -52,8 +63,24 @@ class App extends React.Component {
             name="search"
             id="search"
             value={this.state.search}
-            onChange={this.handleSearch}
+            onChange={this.handleChange}
           />
+          <label htmlFor="isStudent">Student</label>
+          <input
+            type="checkbox"
+            name="isStudent"
+            id="isStudent"
+            checked={this.state.isStudent}
+            onChange={this.handleChange}
+          />
+          <label htmlFor="isTeacher">Teacher</label>
+          <input
+            type="checkbox"
+            name="isTeacher"
+            id="isTeacher"
+            checked={this.state.isTeacher}
+            onChange={this.handleChange}
+          />          
         </form>
         <table>
           <tr style={{tableLayout: 'fixed', display: 'flex', justifyContent: 'space-between', width: '1000px', textAlign: 'left'}}>
