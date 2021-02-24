@@ -58,7 +58,7 @@ class App extends React.Component {
         <form onSubmit={this.handleSubmit} style={{width:'100%', marginBottom: '50px'}}>
           <div>
             <label htmlFor="search"></label>
-            <input style={{width:'80%', height: '25px', marginLeft: '20px'}}
+            <input style={{width:'90%', height: '25px', marginLeft: '20px'}}
               type="text"
               name="search"
               id="search"
@@ -92,7 +92,7 @@ class App extends React.Component {
               </select> 
           </div>
         </form>
-        <table>
+        <table style={{marginLeft: '100px'}}>
           <tr style={{tableLayout: 'fixed', display: 'flex', justifyContent: 'space-between', width: '1000px', textAlign: 'left'}}>
             <th style={{width: '200px'}}>First Name</th>
             <th style={{width: '200px'}}>Last Name</th>
