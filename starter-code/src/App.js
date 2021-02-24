@@ -35,7 +35,7 @@ class App extends React.Component {
         }).filter(element => {
           return (this.state.isTeacher === false ? true: element.role === "teacher")
         }).filter(element => {
-          return (this.state.campus === element.campus)
+          return (this.state.campus === 'All'? true: element.campus === this.state.campus)
         }).map((user,index) => {
           return (
             <tr key={user.id} style={{width: '1000px', display:'flex', alignItems: 'center'}}>
@@ -56,36 +56,41 @@ class App extends React.Component {
         alignItems: 'center'}}>
         <h1>IronBook</h1>
         <form onSubmit={this.handleSubmit} style={{width:'100%', marginBottom: '50px'}}>
-          <label htmlFor="search"></label>
-          <input style={{width:'80%', height: '25px', margin: '20px'}}
-            type="text"
-            name="search"
-            id="search"
-            value={this.state.search}
-            onChange={this.handleChange}
-          />
-          <label htmlFor="isStudent">Student</label>
-          <input
-            type="checkbox"
-            name="isStudent"
-            id="isStudent"
-            checked={this.state.isStudent}
-            onChange={this.handleChange}
-          />
-          <label htmlFor="isTeacher">Teacher</label>
-          <input
-            type="checkbox"
-            name="isTeacher"
-            id="isTeacher"
-            checked={this.state.isTeacher}
-            onChange={this.handleChange}
-          />   
-          <label for="campus">Campus:</label>
-          <select name="campus" id="campus" value={this.state.campus} onChange={this.handleChange}>
-            <option value="Berlin">Berlin</option>
-            <option value="Lisbon">Lisbon</option>
-            <option value="Paris">Paris</option>
-          </select>       
+          <div>
+            <label htmlFor="search"></label>
+            <input style={{width:'80%', height: '25px', marginLeft: '20px'}}
+              type="text"
+              name="search"
+              id="search"
+              value={this.state.search}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div style={{marginTop: '10px'}}>
+              <label htmlFor="isStudent" style={{marginLeft: '20px', marginRight: '5px'}}>Student</label>
+              <input
+                type="checkbox"
+                name="isStudent"
+                id="isStudent"
+                checked={this.state.isStudent}
+                onChange={this.handleChange}
+              />
+              <label htmlFor="isTeacher" style={{marginLeft: '20px', marginRight: '5px'}}>Teacher</label>
+              <input
+                type="checkbox"
+                name="isTeacher"
+                id="isTeacher"
+                checked={this.state.isTeacher}
+                onChange={this.handleChange}
+              />   
+              <label for="campus"  style={{marginLeft: '20px', marginRight: '10px'}}>Campus:</label>
+              <select name="campus" id="campus" value={this.state.campus} onChange={this.handleChange}>
+                <option value="All">All</option>
+                <option value="Berlin">Berlin</option>
+                <option value="Lisbon">Lisbon</option>
+                <option value="Paris">Paris</option>
+              </select> 
+          </div>
         </form>
         <table>
           <tr style={{tableLayout: 'fixed', display: 'flex', justifyContent: 'space-between', width: '1000px', textAlign: 'left'}}>
