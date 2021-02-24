@@ -30,3 +30,8 @@ td {
   justify-content: space-between;
   align-items: center;
 }
+
+.table {
+  font-weight: 300;
+  width: 300px;
+}
