@@ -12,7 +12,8 @@ class App extends React.Component {
         myUsers: users,
         search: '',
         isStudent: false,
-        isTeacher: false
+        isTeacher: false,
+        campus: 'Berlin'
     }
   }
 
@@ -27,26 +28,22 @@ class App extends React.Component {
 
   render() {
     const stateLowerCase = this.state.search.toLowerCase();
-    const searchFiltered = users.filter(element => {
-      return (this.state.search === '' ? true: ( element.firstName.toLowerCase().includes(stateLowerCase)|| element.lastName.toLowerCase().includes(stateLowerCase)))
-    })
-    const searchStudent = searchFiltered.filter(element => {
-      return (this.state.isStudent === false ? true: element.role === "student")
-    })
-    const searchTeacher = searchStudent.filter(element => {
-      return (this.state.isTeacher === false ? true: element.role === "teacher")
-    })
-
-    const list = searchTeacher.map((user,index) => {
-      return (
-        <tr key={user.id} style={{width: '1000px', display:'flex', alignItems: 'center'}}>
-          <p style={{width: '200px'}}>{user.firstName}</p>
-          <p style={{width: '200px'}}>{user.lastName}</p>
-          <p style={{width: '200px'}}>{user.campus}</p>
-          <p style={{width: '200px'}}>{user.role}</p>
-          {user.linkedin && <a style={{width: '200px'}} href={user.linkedin}>linkedin</a>}
-        </tr>
-      )  
+    const list = users.filter(element => {
+          return (this.state.search === '' ? true: ( element.firstName.toLowerCase().includes(stateLowerCase)|| element.lastName.toLowerCase().includes(stateLowerCase)))
+        }).filter(element => {
+          return (this.state.isStudent === false ? true: element.role === "student")
+        }).filter(element => {
+          return (this.state.isTeacher === false ? true: element.role === "teacher")
+        }).map((user,index) => {
+          return (
+            <tr key={user.id} style={{width: '1000px', display:'flex', alignItems: 'center'}}>
+              <p style={{width: '200px'}}>{user.firstName}</p>
+              <p style={{width: '200px'}}>{user.lastName}</p>
+              <p style={{width: '200px'}}>{user.campus}</p>
+              <p style={{width: '200px'}}>{user.role}</p>
+              {user.linkedin && <a style={{width: '200px'}} href={user.linkedin}>linkedin</a>}
+            </tr>
+          )  
     })
 
     return (
@@ -80,7 +77,13 @@ class App extends React.Component {
             id="isTeacher"
             checked={this.state.isTeacher}
             onChange={this.handleChange}
-          />          
+          />   
+          <label for="campus">Campus:</label>
+          <select name="campus" id="campus" value={this.state.campus} onChange={this.handleChange}>
+            <option value="Berlin">Berlin</option>
+            <option value="Lisbon">Lisbon</option>
+            <option value="Paris">Paris</option>
+          </select>       
         </form>
         <table>
           <tr style={{tableLayout: 'fixed', display: 'flex', justifyContent: 'space-between', width: '1000px', textAlign: 'left'}}>
