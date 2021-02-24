@@ -9,11 +9,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        myUsers: users,
         search: '',
         isStudent: false,
         isTeacher: false,
-        campus: 'Berlin'
+        campus: 'All'
     }
   }
 
