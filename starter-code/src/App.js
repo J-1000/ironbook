@@ -7,30 +7,45 @@ class App extends React.Component {
   state = {
     query: "",
     student: true,
-    teacher: true
+    teacher: true,
+    campus: "",
   };
 
-  filterUsers(query) {
-    return users.filter(
-      (user) => {
-        if (query === "") return this.state[user.role];
-        let fullName = user.firstName + " " + user.lastName;
-        return this.state[user.role] && fullName.toLowerCase().includes(query);
-      }
-    );
+  filterUsers() {
+    return users.filter((user) => {
+      // if (this.state.query === "") return this.state[user.role];
+      let fullName = user.firstName + " " + user.lastName;
+      return (
+        this.state[user.role] &&
+        fullName.toLowerCase().includes(this.state.query.toLowerCase()) &&
+        (user.campus === this.state.campus || !this.state.campus)
+      );
+    });
   }
 
   inputHandler(event) {
     const target = event.target;
     const name = target.name;
-    const value = target.type === 'checkbox' ? target.checked : target.value.toLowerCase();
+    const value =
+      target.type === "checkbox" ? target.checked : target.value;
     this.setState(() => ({
       [name]: value,
     }));
   }
 
   render() {
-    const usersRender = this.filterUsers(this.state.query).map((user) => {
+    console.log(this.state)
+    const campuses = [...new Set(users.map((user) => user.campus))].map(
+      (campus) => {
+        const id = uuidv4();
+        return (
+          <option key={id} value={campus}>
+            {campus}
+          </option>
+        );
+      }
+    );
+    const usersRender = this.filterUsers().map((user) => {
       const id = uuidv4();
       return (
         <tr key={id}>
@@ -50,7 +65,7 @@ class App extends React.Component {
     });
 
     return (
-      <div className="container d-flex flex-column justify-content-center">
+      <div className="container d-flex flex-column justify-content-center align-items-center">
         <h1>IronBook</h1>
         <div className="input-group mb-3">
           <span className="input-group-text" id="query">
@@ -67,18 +82,44 @@ class App extends React.Component {
           />
         </div>
         <div className="d-flex justify-content-center">
-          <div className="form-check m-2">
+          <div className="form-check m-2 mx-3">
             <label className="form-check-label" htmlFor="studentCheck">
               Student
             </label>
-            <input className="form-check-input" name="student" checked={this.state.student} type="checkbox" id="studentCheck" onChange={event => this.inputHandler(event)}/>
+            <input
+              className="form-check-input"
+              name="student"
+              checked={this.state.student}
+              type="checkbox"
+              id="studentCheck"
+              onChange={(event) => this.inputHandler(event)}
+            />
           </div>
-          <div className="form-check m-2">
+          <div className="form-check m-2 mx-3">
             <label className="form-check-label" htmlFor="flexCheckChecked">
               Teacher
             </label>
-            <input className="form-check-input" name="teacher" checked={this.state.teacher} type="checkbox" id="flexCheckChecked" onChange={event => this.inputHandler(event)}/>
+            <input
+              className="form-check-input"
+              name="teacher"
+              checked={this.state.teacher}
+              type="checkbox"
+              id="flexCheckChecked"
+              onChange={(event) => this.inputHandler(event)}
+            />
           </div>
+          <div className="d-flex align-items-center mx-2">
+            <p className="mb-0 text-center">Campus:</p>
+          </div>
+          <select
+            className="form-select"
+            name="campus"
+            value={this.state.campus}
+            onChange={(event) => this.inputHandler(event)}
+          >
+            <option value="">All Countries</option>
+            {campuses}
+          </select>
         </div>
         <table className="table table-sm table-hover">
           <thead>
