@@ -6,7 +6,24 @@ import { v4 as uuidv4 } from "uuid";
 class App extends React.Component {
   state = {
     displayedUsers: users,
+    query: "",
   };
+
+  searchHandler(event) {
+    let query = event.target.value.toLowerCase();
+    this.setState({query: query});
+    let displayedUsersCopy = users.filter(
+      (user) =>
+        user.firstName.toLowerCase().includes(query) ||
+        user.lastName.toLowerCase().includes(query)
+    );
+    if (this.state.query === "") {
+      displayedUsersCopy = users;
+    }
+    this.setState(() => ({
+      displayedUsers: displayedUsersCopy,
+    }));
+  }
 
   render() {
     const usersRender = this.state.displayedUsers.map((user) => {
@@ -20,31 +37,42 @@ class App extends React.Component {
           <td>
             {user.linkedin && (
               <a href={user.linkedin}>
-                <i class="fab fa-linkedin fa-lg text-primary"></i>
+                <i className="fab fa-linkedin fa-lg text-primary"></i>
               </a>
             )}
           </td>
         </tr>
       );
     });
+
     return (
       <div className="container d-flex flex-column justify-content-center">
         <h1>IronBook</h1>
+        <div className="input-group mb-3">
+          <span className="input-group-text" id="query">
+            Name Search
+          </span>
+          <input
+            type="text"
+            name="query"
+            className="form-control"
+            aria-label="query"
+            aria-describedby="basic-addon1"
+            value={this.state.query}
+            onChange={(event) => this.searchHandler(event)}
+          />
+        </div>
         <table className="table table-sm table-hover">
-          <div class="table-responsive">
-            <table class="table align-middle">
-              <thead>
-                <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Campus</th>
-                  <th>Role</th>
-                  <th>Links</th>
-                </tr>
-              </thead>
-              <tbody>{usersRender}</tbody>
-            </table>
-          </div>
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Campus</th>
+              <th>Role</th>
+              <th>Links</th>
+            </tr>
+          </thead>
+          <tbody>{usersRender}</tbody>
         </table>
       </div>
     );
