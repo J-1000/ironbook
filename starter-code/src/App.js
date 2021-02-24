@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import users from './users.json';
+import linkedin from './linkedin.png';
 
 export default class App extends Component {
 
@@ -35,7 +36,7 @@ export default class App extends Component {
                   <td>{ user.lastName }</td>
                   <td>{ user.campus }</td>
                   <td>{ user.role }</td>
-                  <td>{ user.linkedin }</td>
+                  <td>{ user.linkedin && <a href={user.linkedin}><img height="20px" src={linkedin} alt="Linkedin"></img></a> }</td>
                 </tr>
               )
             })}
