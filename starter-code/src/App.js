@@ -34,6 +34,8 @@ class App extends React.Component {
           return (this.state.isStudent === false ? true: element.role === "student")
         }).filter(element => {
           return (this.state.isTeacher === false ? true: element.role === "teacher")
+        }).filter(element => {
+          return (this.state.campus === element.campus)
         }).map((user,index) => {
           return (
             <tr key={user.id} style={{width: '1000px', display:'flex', alignItems: 'center'}}>
