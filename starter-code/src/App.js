@@ -9,9 +9,9 @@ class App extends React.Component {
 
   state = {
     search:'',
-    searchStudent:true,
-    searchTeacher:ture,
-    searchCountry:''
+    student:true,
+    teacher:true,
+    campus:''
   }
 
   handleChange = event => {
@@ -19,26 +19,37 @@ class App extends React.Component {
     this.setState({
       [search]: event.target.value
     })
-
+    console.log(this.state.campus)
   }
 
   handleCheckbox = event => { 
+    const role = event.target.name
     this.setState({
-
-      searchStudent: event.target.checked
+      [role]: event.target.checked
     })
+    console.log('student' + this.state.student)
+    console.log('teacher' + this.state.teacher)
   }
 
   render() {
 
-    const option = [...]
+    const campuses = [...new Set(usersList.map(user => user.campus))].map(campus => {
+      return <option value={campus}>{campus}</option>
+    })
+    console.log(campuses)
+    
 
+    
     const arrConc = usersList.map(user => ({...user, conc: user.firstName+user.lastName}))
-    console.log(this.state.searchStudent)
-    this.state.searchStudent ? let searchParam ="student"
-    const usersH = arrConc
-      .filter((filteredUser) => filteredUser.conc.includes(this.state.search))
-      
+    
+    const filteredUsers = arrConc.filter (user => {
+      return user.conc.toLowerCase().includes(this.state.search.toLowerCase())
+      && this.state[user.role]
+      && ((user.campus == this.state.campus) || !this.state.campus)
+    })
+    
+    const usersH = filteredUsers
+
       .map((user => {
       return(
         <tr key={uuidv4()}>
@@ -63,10 +74,14 @@ class App extends React.Component {
         value={this.state.search}
         onChange={this.handleChange}
         ></input>
-        <input type="checkbox" id="checkbox" name="student" checked={this.state.searchStudent} onChange={this.handleCheckbox}></input>
+        <input type="checkbox" id="checkbox" name="student" checked={this.state.student} onChange={this.handleCheckbox}></input>
         <label htmlFor="radcheckboxio">Student</label>
-        <input type="checkbox" id="checkbox" name="teacher"></input>
+        <input type="checkbox" id="checkbox" name="teacher" checked={this.state.teacher} onChange={this.handleCheckbox}></input>
         <label htmlFor="checkbox">Teacher</label>
+        <select name="campus" value={this.state.campus} onChange={this.handleChange}>
+          <option value="">All</option>
+          {campuses}
+        </select>
         <table>
         <thead>
           <tr>
