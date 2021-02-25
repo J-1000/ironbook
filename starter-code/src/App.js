@@ -28,25 +28,21 @@ class App extends React.Component {
   render() {
     const stateLowerCase = this.state.search.toLowerCase();
     const list = users.filter(element => {
-          return (this.state.search === '' ? true: ( element.firstName.toLowerCase().includes(stateLowerCase)|| element.lastName.toLowerCase().includes(stateLowerCase)))
-        }).filter(element => {
-          return (this.state.isStudent === false ? true: element.role === "student")
-        }).filter(element => {
-          return (this.state.isTeacher === false ? true: element.role === "teacher")
-        }).filter(element => {
-          return (this.state.campus === 'All'? true: element.campus === this.state.campus)
-        }).map((user,index) => {
-          return (
-            <tr key={user.id} style={{width: '1000px', display:'flex', alignItems: 'center'}}>
-              <p style={{width: '200px'}}>{user.firstName}</p>
-              <p style={{width: '200px'}}>{user.lastName}</p>
-              <p style={{width: '200px'}}>{user.campus}</p>
-              <p style={{width: '200px'}}>{user.role}</p>
-              {user.linkedin && <a style={{width: '200px'}} href={user.linkedin}>linkedin</a>}
-            </tr>
-          )  
-    })
-
+                  return (   (this.state.search === '' ? true: ( element.firstName.toLowerCase().includes(stateLowerCase)|| element.lastName.toLowerCase().includes(stateLowerCase)))
+                          && (this.state.isStudent === false ? true: element.role === "student")
+                          && (this.state.isTeacher === false ? true: element.role === "teacher")
+                          && (this.state.campus === 'All'? true: element.campus === this.state.campus) 
+                        )}).map((user,index) => {
+                  return (
+                          <tr key={user.id} style={{width: '1000px', display:'flex', alignItems: 'center'}}>
+                            <p style={{width: '200px'}}>{user.firstName}</p>
+                            <p style={{width: '200px'}}>{user.lastName}</p>
+                            <p style={{width: '200px'}}>{user.campus}</p>
+                            <p style={{width: '200px'}}>{user.role}</p>
+                            {user.linkedin && <a style={{width: '200px'}} href={user.linkedin}>linkedin</a>}
+                          </tr>
+                          )
+                        })  
     return (
       <div style={{
         display: 'flex',
