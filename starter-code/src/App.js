@@ -17,6 +17,7 @@ class App extends React.Component {
     teacher: false,
     student: false
 
+
    }
 
 
@@ -45,7 +46,8 @@ class App extends React.Component {
  
     const filteredUsers = users.filter(user => {
       return `${user.lastName}${user.firstName}`.toLowerCase().includes(this.state.search.toLowerCase())
-       || (this.state[user.role] === this.state.teacher)})
+       && (this.state[user.role] === this.state.teacher)
+    })
     
     return (
       <div> 
