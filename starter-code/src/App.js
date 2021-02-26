@@ -14,8 +14,8 @@ class App extends React.Component {
   
    state = {
     search: '',
-    teacher: false,
-    student: false
+    teacher: true,
+    student: true
 
 
    }
@@ -30,8 +30,10 @@ class App extends React.Component {
   }
 
   handleTeacherChange = event => {
+    console.log(event.target.type)
+
     this.setState({
-      teacher: event.target.checked
+     teacher: event.target.checked
     })
   }
 
@@ -40,13 +42,16 @@ class App extends React.Component {
       student: event.target.checked
     })
   }
+  
 
 
   render() {
  
     const filteredUsers = users.filter(user => {
-      return `${user.lastName}${user.firstName}`.toLowerCase().includes(this.state.search.toLowerCase())
-       && (this.state[user.role] === this.state.teacher)
+      return this.state[user.role] 
+      && `${user.lastName}${user.firstName}`.toLowerCase().includes(this.state.search.toLowerCase())
+       //&& 
+       // (this.state[user.role] === this.state.student)
     })
     
     return (
