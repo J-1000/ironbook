@@ -15,9 +15,8 @@ class App extends React.Component {
    state = {
     search: '',
     teacher: true,
-    student: true
-
-
+    student: true,
+    campus: ''
    }
 
 
@@ -29,29 +28,49 @@ class App extends React.Component {
     })
   }
 
-  handleTeacherChange = event => {
-    console.log(event.target.type)
+  // handleTeacherChange = event => {
+  //   this.setState({
+  //    teacher: event.target.checked
+  //   })
+  // }
 
+  // handleStudentChange = event => {
+  //   this.setState({
+  //     student: event.target.checked
+  //   })
+  // }
+
+  handleCheckBoxChange = event => {
+    console.log(event.target.name)
+    const name = event.target.name
     this.setState({
-     teacher: event.target.checked
+      [name] : event.target.checked
     })
   }
 
-  handleStudentChange = event => {
+  handleCampusChange = event => {
+    console.log(event.target.name)
     this.setState({
-      student: event.target.checked
+      campus : event.target.value
     })
+
   }
-  
 
 
   render() {
- 
+    let campus = [...new Set(users.map(user => user.campus))]
+    console.log(campus)
+    let options = campus.map(city => {
+      return <option key={city}>{city}</option>
+    })
+
+    console.log(campus)
     const filteredUsers = users.filter(user => {
+      console.log(!this.state.campus)
       return this.state[user.role] 
       && `${user.lastName}${user.firstName}`.toLowerCase().includes(this.state.search.toLowerCase())
-       //&& 
-       // (this.state[user.role] === this.state.student)
+      && ((user.campus === this.state.campus) || !this.state.campus)
+      
     })
     
     return (
@@ -72,7 +91,7 @@ class App extends React.Component {
             name="teacher"
             id="teacher"
             checked={this.state.teacher}
-            onChange={this.handleTeacherChange}
+            onChange={this.handleCheckBoxChange}
           />
           <label htmlFor="teacher">Teacher</label>
           <input
@@ -80,9 +99,18 @@ class App extends React.Component {
             name="student"
             id="student"
             checked={this.state.student}
-            onChange={this.handleStudentChange}
+            onChange={this.handleCheckBoxChange}
           />
           <label htmlFor="student">Student</label>
+          <label htmlFor="campus">Campus:</label>
+            <select name="campus" 
+            id="campus" 
+            value={this.state.campus} 
+            onChange={this.handleCampusChange}>
+            {/* I need to leave the value empty to be able to execute the filtering condition  */}
+            <option value="">All</option>
+            {options}
+  </select>
     </div>
 
       <table>
