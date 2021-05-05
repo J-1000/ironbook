@@ -1,32 +1,71 @@
-body {
-  margin: 0px;
-  padding: 0px;
-  font-size: 20px;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-}
-
-h1 {
+.App {
   text-align: center;
 }
 
-thead {
-  font-weight: 700;
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
 }
 
-td {
-  padding: 20px;
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
 
-.linkedin {
-  width: 20px;
-}
-
-.filters {
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table tr th {
+  padding: 0.6em 0.3em;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+table tr td {
+  text-align: left;
+  padding: 0.3em;
+}
+table td a img {
+  max-height: 1em;
+}
+.simuForm {
+  width: 98%;
+  text-align: left;
+  margin-left: 2em;
+}
+.simuForm input[type='text'] {
+  width: 80%;
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+}
+.simuForm .ident {
+  margin-left: 1em;
+  margin-right: 0.5em;
 }
