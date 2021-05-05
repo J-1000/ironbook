@@ -30,3 +30,54 @@ td {
   justify-content: space-between;
   align-items: center;
 }
+
+/* Project - Css */
+
+img {
+  width: 15px;
+}
+
+table {
+  margin: auto;
+}
+
+th {
+  text-align: left;
+}
+
+td {
+  padding: 10px 40px 10px 0px;
+}
+
+.ironbook {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input.searchbar {
+  margin-bottom: 1rem;
+  width: 50%;
+}
+
+.filter {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  width: 50%;
+  margin-bottom: 2rem;
+}
+
+.filter div {
+  padding-right: 4vw;
+}
+
+select {
+  margin-left: 5px;
+  vertical-align: middle;
+  width: 90px;
+  height: 21px;
+  border-radius: 8px;
+  outline: none;
+  padding-left: 2px;
+}
