@@ -6,7 +6,7 @@ import users from './users';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { search: '', campus: '', teacher: false, student: false };
+    this.state = { search: '', campus: '', teacher: true, student: true };
 
     this.handleChange = this.handleChange.bind(this);
   }
@@ -22,6 +22,7 @@ class App extends React.Component {
   };
 
   render() {
+    /*
     let baseUsers = this.state.search
       ? users.filter((user) =>
           user.firstName
@@ -41,8 +42,19 @@ class App extends React.Component {
     if (this.state.campus) {
       baseUsers = baseUsers.filter((user) => user.campus === this.state.campus);
     }
+    */
 
-    const usersTable = baseUsers.map((user, idx) => (
+    const betterFilter = users.filter(
+      (user) =>
+        this.state[user.role] &&
+        (user.campus === this.state.campus || !this.state.campus) &&
+        user.firstName
+          .concat(user.lastName)
+          .toLowerCase()
+          .includes(this.state.search.toLowerCase())
+    );
+
+    const usersTable = betterFilter.map((user, idx) => (
       <tr key={'tr_' + idx}>
         <td>{user.firstName}</td>
         <td>{user.lastName}</td>
