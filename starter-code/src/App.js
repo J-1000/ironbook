@@ -1,12 +1,15 @@
 import './App.css';
 import linkedin from "./linkedin.png"
-import { useState } from "react";
+import { Component } from "react";
 // import { v4 as uuidv4 } from 'uuid';
 import usersData from "./users";
 
-function App() {
-	const [users, setUsers] = useState(usersData);
+class App extends Component {
+	state = {
+		users: usersData
+	}
 
+	render() {
 	return (
 		<>
 		<div className="Header">
@@ -22,7 +25,7 @@ function App() {
 					<th>Links</th>
 				</thead>
 				<tbody>
-					{users.map(user => (
+					{this.state.users.map(user => (
 					// <tr key={contact.id}>
 					<tr>
 						<td>{user.firstName}</td>
@@ -38,6 +41,7 @@ function App() {
 		</div>
 		</>
 	);
+	}
 }
 
 export default App;
