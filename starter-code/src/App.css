@@ -8,6 +8,16 @@ body {
   justify-content: center;
 }
 
+.search {
+  width: 60vw;
+  display: flex;
+  justify-content: center;
+}
+
+.search div {
+  margin: 0 10px;
+}
+
 .App {
   display: flex;
   justify-content: center;
