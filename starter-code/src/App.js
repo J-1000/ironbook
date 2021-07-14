@@ -13,16 +13,18 @@ class App extends Component {
 	}
 
 	handleChange = event => {
+		const name = event.target.name;
+		const value = event.target.type === 'text' ? event.target.value : event.target.checked;
 		this.setState({
-			search: event.target.value
+			[name]: value
 		})
 	}
 
 	render() {
 
 		const filteredUsers = users.filter(user => 
-			// ((this.state.students && user.role === 'student') || (this.state.teachers && user.role === 'teacher'))
-			user.firstName.toLowerCase().includes(this.state.search.toLowerCase()) || user.lastName.toLowerCase().includes(this.state.search.toLowerCase())
+			((this.state.students && user.role === 'student') || (this.state.teachers && user.role === 'teacher')) &&
+			(user.firstName.toLowerCase().includes(this.state.search.toLowerCase()) || user.lastName.toLowerCase().includes(this.state.search.toLowerCase()))
 		)
 
 		return (
@@ -32,6 +34,10 @@ class App extends Component {
 			</div>
 			<div className="search">
 				<input type="text" id="search" name="search" placeholder="Search..." onChange={this.handleChange}/>
+			</div>
+			<div>
+				<label htmlFor="students">Students</label><input type="checkbox" id="students" name="students"	 onChange={this.handleChange} defaultChecked></input>
+				<label htmlFor="students">Teachers</label><input type="checkbox" id="teachers" name="teachers" onChange={this.handleChange} defaultChecked></input>
 			</div>
 			<div className="App">
 				<table>
