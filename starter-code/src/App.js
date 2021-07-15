@@ -6,7 +6,10 @@ import users from "./users";
 class App extends React.Component {
 
   state = {
-    search: ''
+    search: '',
+    student: false,
+    teacher: false,
+    campus: 'all'
   }
 
   handleChange = event => {
@@ -19,52 +22,116 @@ class App extends React.Component {
   }
 
   render() {
+    let filteredUsers;
 
-    const filteredUsers = users.filter(contact => {
-      return contact.firstName.toLowerCase().includes(this.state.search.toLowerCase())
+    filteredUsers = users.filter(user => {
+      return user.firstName.toLowerCase().includes(this.state.search.toLowerCase()) || user.lastName.toLowerCase().includes(this.state.search.toLowerCase())
     })
 
+    if (this.state.student) {
+      filteredUsers = filteredUsers.filter(user => {
+        return user.role === 'student';
+      })
+    }
+
+    if (this.state.teacher) {
+      filteredUsers = filteredUsers.filter(user => {
+        return user.role === 'teacher';
+      })
+    }
+
+    switch (this.state.campus) {
+      case "berlin":
+        filteredUsers = filteredUsers.filter((user) => {
+          return user.campus === "Berlin";
+        });
+        break;
+
+      case "lisbon":
+        filteredUsers = filteredUsers.filter((user) => {
+          return user.campus === "Lisbon";
+        });
+        break;
+
+      case "paris":
+        filteredUsers = filteredUsers.filter((user) => {
+          return user.campus === "Paris";
+        })
+        break;
+        default:
+        break;
+    }
+
     const ironhackerList = filteredUsers.map((user, index) => {
-      return
+      return (
       <tr key={index}> 
-          <td>{users.firstName}</td>
-          <td>{users.lastName}</td>
-          <td>{users.campus}</td>
-          <td>{users.role}</td>
-          {users.linkedin ?
+          <td>{user.firstName}</td>
+          <td>{user.lastName}</td>
+          <td>{user.campus}</td>
+          <td>{user.role}</td>
+          {user.linkedin ?
             <td>
               <a href={user.linkedin}>
                 <img src='/linkedin.png' alt='linkedin' width='20'/>
               </a>
             </td> : <td></td>}
             </tr>
+            )
     })
-   
+
     return (
       <>
         <h1>IronBook</h1>
+        <form>
+          <label htmlFor="search"></label>
+          <input
+          type="search"
+          name="search"
+          id="search"
+          value={this.state.search}
+          onChange={this.handleChange}
+          />
+
+          <label htmlFor="student">Student:</label>
+          <input
+            type="checkbox"
+            name="student"
+            id="student"
+            value={this.state.student}
+            onChange={this.handleChange}
+            />
+
+          <label htmlFor="teacher">Teacher:</label>
+          <input
+            type="checkbox"
+            name="teacher"
+            id="teacher"
+            value={this.state.teacher}
+            onChange={this.handleChange}
+            />
+
+          <label htmlFor='campus'> Campus:</label>
+          <select name='campus' id='campus' value={this.state.campus} onChange={this.handleChange}>
+          <option value='paris'>Paris</option>
+          <option value='berlin'>Berlin</option>
+          <option value='lisbon'>Lisbon</option>
+          <option value='all'>All</option>
+          </select>
+        </form>
+
         <table>
           <thead>
             <tr>
-            <th>
-              First Name
-            </th>
-            <th>
-              Last Name
-            </th>
-            <th>
-              Campus
-            </th>
-            <th>
-              Role
-            </th>
-            <th>
-              Links
-            </th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Campus</th>
+            <th>Role</th>
+            <th>Links</th>
             </tr>
           </thead>
           <tbody>
-            {ironhackerList}
+        
+            {ironhackerList} 
           </tbody>
         </table>
       </>
@@ -73,14 +140,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-{/* <form onSubmit={this.handleSubmit}>
-<label htmlFor="search">Title: </label>
-  <input
-    type="text"
-    name="search"
-    id="search"
-    value={this.state.search}
-    onChange={this.handleChange}
-  />
-          </form> */}
