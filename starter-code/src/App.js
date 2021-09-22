@@ -35,20 +35,20 @@ function App() {
       filteredList = allUsers
       .filter(user => (user["firstName"]+user["lastName"]).toLowerCase().includes(searchTerm.toLowerCase()))
     }
-    if (isStudent) {
-       filteredList = filteredList.filter(user => user.role === 'student')
+    if (!isStudent) {
+       filteredList = filteredList.filter(user => user.role === 'teacher')
     }
-    if (isTeacher) {
-      filteredList = filteredList.filter(user => user.role === 'teacher')
+    if (!isTeacher) {
+      filteredList = filteredList.filter(user => user.role === 'student')
     }
     if (campus === 'berlin') {
-      filteredList = filteredList.filter(user => user.campus === 'berlin')
+      filteredList = filteredList.filter(user => user.campus.toLowerCase() === 'berlin')
     }
     if (campus === 'paris') {
-      filteredList = filteredList.filter(user => user.campus === 'paris')
+      filteredList = filteredList.filter(user => user.campus.toLowerCase() === 'paris')
     }
     if (campus === 'lisbon') {
-      filteredList = filteredList.filter(user => user.campus === 'lisbon')
+      filteredList = filteredList.filter(user => user.campus.toLowerCase() === 'lisbon')
     }
    return filteredList
   }
