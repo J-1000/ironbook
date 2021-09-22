@@ -8,6 +8,12 @@ body {
   margin-right: auto;
 }
 
+.search {
+  margin: 0 auto;
+  display: block;
+  width: 80%;
+}
+
 .container {
   display: flex;
   justify-content: center;

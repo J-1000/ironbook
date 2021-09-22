@@ -1,31 +1,46 @@
-import React from 'react';
+import { useState } from 'react';
 import './App.css';
-import users from "./users";
+import usersData from "./users";
 import { v4 as uuid } from 'uuid';
+import React from 'react';
 
 
-const usersList = users.map(user => {
-  return (
-  <tr key={ uuid()}>
-  <td>{user.firstName}</td>
-  <td>{user.lastName}</td>
-  <td>{user.campus}</td>
-  <td>{user.role}</td>
-  {user.linkedin && <td><a href={user.linkedin}><i className="fab fa-linkedin"></i></a></td>}
-  </tr>
-  )
-})
+
+function App() {
+  const [users, setUsers] = useState(usersData)
+  const [query, setQuery] = useState('');
+
+  const handleSearch = event => {
+    setQuery(event.target.value);
+  };
 
 
-class App extends React.Component {
+  const results = users.filter(user =>
+    `${user.firstName} ${user.lastName}`.toLowerCase().includes(query)
+  );
+  
 
-
-  render() {
+  const usersList = results.map(user => {
     return (
+    <tr key={ uuid()}>
+    <td>{user.firstName}</td>
+    <td>{user.lastName}</td>
+    <td>{user.campus}</td>
+    <td>{user.role}</td>
+    {user.linkedin && <td><a href={user.linkedin}><i className="fab fa-linkedin"></i></a></td>}
+    </tr>
+    )
+  })
+
+  return (
       <div>
         <header>
           <h1>Ironbook</h1>
         </header>
+        <form >
+          <input type="search" value={query} onChange={handleSearch} id="search" className="search" aria-label="Search" />
+        </form>
+
         <div>
         <table className="center">
           <thead>
@@ -44,7 +59,6 @@ class App extends React.Component {
         </div>
       </div>
     );
-  }
 }
 
 export default App;
