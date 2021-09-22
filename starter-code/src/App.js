@@ -10,6 +10,7 @@ function App () {
     const [searchName, setSearchName] = useState('');
     const [isStudent, setIsStudent] = useState(false);
     const [isTeacher, setIsTeacher] = useState(false);
+    const [city, setCity] = useState('');
 
     // const filteredStudents = users.filter(user => {
     //   if(user.role === "student") {
@@ -29,21 +30,24 @@ function App () {
       setIsTeacher(event.target.checked)
     }
 
-    // if (isStudent) {  (hacker.role.includes('student')) }
-    // else if (isTeacher) { (hacker.role.includes('teacher')) }
+    const handleCampusChange = event => {
+      setCity(event.target.value)
+    }
 
     const filteredUsers = users.filter(user => {
       return (!searchName ? true: `${user.firstName}${user.lastName}`.toLowerCase().includes(searchName) )
         && (!isTeacher ? true: user.role === 'teacher') && (!isStudent ? true: user.role === 'student')
     })
+    
+    let removeDuplicateCities = new Set();
 
+    const filteredCampuses = users.filter((user) => {
+      // return index === self.indexOf(user.campus);
+      removeDuplicateCities.add(user.campus)
+      // return [...new Set(user.campus)]
+    })
 
-    // const filteredUsers = users.filter(user => {
-    //   return  (user.firstName.toLowerCase().includes(searchName.toLowerCase()) 
-    //     || user.lastName.toLowerCase().includes(searchName.toLowerCase()))
-    //     && isTeacher ? true : user.role === 'teacher'
-    // })
-
+    let finalCityList = [...removeDuplicateCities]
     return (
       <div>
         <h1>Ironbook</h1>
@@ -56,6 +60,14 @@ function App () {
             <input type="checkbox" name="isStudent" id="isStudent" checked={isStudent} onChange={handleStudentChange} />
             <label htmlFor="isTeacher">Teacher</label>
             <input type="checkbox" name="isTeacher" id="isTeacher" checked={isTeacher} onChange={handleTeacherChange} />
+            <label htmlFor="city">Campus</label>
+            <select name="city" id="city" value={city} onChange={handleCampusChange}>
+            {finalCityList.map((user) => {
+              return(
+              <option value="">{user}</option>
+              )
+            })}
+            </select>
           </div>
         </form>
         </div>
