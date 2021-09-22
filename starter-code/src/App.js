@@ -11,6 +11,7 @@ function App() {
   const [query, setQuery] = useState('');
   const [studentRole, setStudentRole] = useState(false);
   const [teacherRole, setTeacherRole] = useState(false);
+  const [campus, setCampus] = useState('All Campuses');
 
   const handleSearch = event => {
     setQuery(event.target.value);
@@ -39,6 +40,20 @@ function App() {
       return user.role === 'teacher';
     })
   }
+
+
+  const handleCampusChange = event => {
+    setCampus(event.target.value)
+  }
+
+
+  if (campus !== 'All Campuses') {
+    results = results.filter(user => {
+      return campus === user.campus;
+    })
+  }
+
+  
   const usersList = results.map(user => {
     return (
     <tr key={ uuid()}>
@@ -64,7 +79,17 @@ function App() {
         
           <label htmlFor="teacherRole">Teacher </label>
           <input type="checkbox" name="teacherRole" id="teacherRole" checked={teacherRole} onChange={handleTeacherChange} />
+
+
+          <label htmlFor="campus">Campus:</label>
+            <select name="campus" id="campus" onChange={handleCampusChange}>
+              <option value="All Campuses">All campuses</option>
+              <option value="Berlin">Berlin</option>
+              <option value="Lisbon">Lisbon</option>
+              <option value="Paris">Paris</option>
+            </select>
         </form>
+
 
         <div>
         <table className="center">
