@@ -41,7 +41,7 @@ function App () {
     const filteredUsers = users.filter(user => {
       return (!searchName ? true: `${user.firstName}${user.lastName}`.toLowerCase().includes(searchName) )
         && (!isTeacher ? true: user.role === 'teacher') && (!isStudent ? true: user.role === 'student')
-        && (!city ? true: user.campus === city)
+        && ((!city || city === "All") ? true : user.campus === city)
     })
     
 
@@ -70,6 +70,7 @@ function App () {
               <option value={city}>{city}</option>
               )
             })}
+            <option value="All">All</option>
             </select>
           </div>
         </form>
