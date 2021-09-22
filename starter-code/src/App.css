@@ -25,8 +25,28 @@ td {
   width: 20px;
 }
 
-.filters {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+#searchBar {
+  display: block;
+  margin: 10px 5%;
+  width: 90%;
+}
+
+#isStudent {
+  margin-left: 20px;
+}
+
+#isTeacher {
+  margin-left: 20px;
+}
+
+.campus {
+  margin-left: 20px;
+}
+
+#campus {
+  margin-left: 10px;
+}
+
+form {
+  text-align: center;
 }

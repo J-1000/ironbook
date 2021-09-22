@@ -3,7 +3,7 @@ import './App.css';
 import allUsers from "./users";
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
-
+import linkedin from './linkedin.png'
 
 // class App extends React.Component {
 function App() {
@@ -62,7 +62,7 @@ function App() {
         <td>{users.lastName}</td>
         <td>{users.campus}</td>
         <td>{users.role}</td>
-        <td>{users.linkedin ? <a href={users.linkedin}>Link</a> : "" }</td>
+        <td>{users.linkedin ? <a href={users.linkedin}><img className="linkedin" src={linkedin}/></a> : "" }</td>
       </tr>
     )
   })
@@ -76,14 +76,13 @@ function App() {
           <label htmlFor="isStudent">Student</label>
           <input type="checkbox" id="isTeacher" checked={isTeacher} onChange={handleIsTeacher} />
           <label htmlFor="isTeacher">Teacher</label>
-          <label htmlFor="campus">Campus</label>
+          <label htmlFor="campus" className="campus">Campus</label>
           <select id="campus" onChange={handleCampus}>
             <option value="all">All</option>
             <option value="berlin">Berlin</option>
             <option value="paris">Paris</option>
             <option value="lisbon">Lisbon</option>
           </select>
-
         </form>
         <div className="container">
           <table>
