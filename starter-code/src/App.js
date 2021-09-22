@@ -11,7 +11,7 @@ function App () {
     const [isStudent, setIsStudent] = useState(false);
     const [isTeacher, setIsTeacher] = useState(false);
     const [city, setCity] = useState('');
-
+    
     // const filteredStudents = users.filter(user => {
     //   if(user.role === "student") {
     //     return user;
@@ -19,35 +19,38 @@ function App () {
     // })
 
     const handleNameChange = event => {
+      event.preventDefault();
       setSearchName(event.target.value)
     }
 
     const handleStudentChange = event => {
+      event.preventDefault();
       setIsStudent(event.target.checked)
     }
 
     const handleTeacherChange = event => {
+      event.preventDefault();
       setIsTeacher(event.target.checked)
     }
 
     const handleCampusChange = event => {
+      event.preventDefault();
       setCity(event.target.value)
     }
 
     const filteredUsers = users.filter(user => {
       return (!searchName ? true: `${user.firstName}${user.lastName}`.toLowerCase().includes(searchName) )
         && (!isTeacher ? true: user.role === 'teacher') && (!isStudent ? true: user.role === 'student')
+        && (!city ? true: user.campus === city)
     })
     
-    let removeDuplicateCities = new Set();
 
-    const filteredCampuses = users.filter((user) => {
-      // return index === self.indexOf(user.campus);
-      removeDuplicateCities.add(user.campus)
-      // return [...new Set(user.campus)]
+    const campuses = users.map((user) => {
+      return user.campus;
     })
 
-    let finalCityList = [...removeDuplicateCities]
+    let removeDuplicateCities = [...new Set(campuses)];
+    
     return (
       <div>
         <h1>Ironbook</h1>
@@ -61,10 +64,10 @@ function App () {
             <label htmlFor="isTeacher">Teacher</label>
             <input type="checkbox" name="isTeacher" id="isTeacher" checked={isTeacher} onChange={handleTeacherChange} />
             <label htmlFor="city">Campus</label>
-            <select name="city" id="city" value={city} onChange={handleCampusChange}>
-            {finalCityList.map((user) => {
+            <select name="city" id="city" checked={city} onChange={handleCampusChange}>
+            {removeDuplicateCities.map((city) => {
               return(
-              <option value="">{user}</option>
+              <option value={city}>{city}</option>
               )
             })}
             </select>
