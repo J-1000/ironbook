@@ -10,44 +10,52 @@ function App () {
   const [query, setQuery] = useState('');
   const [teachers, setTeachers] = useState(true);
   const [students, setStudents] = useState(false);
-
+  const [campus, setCampus] = useState('all');
+  
+  const locations = new Set (users.map(user => user.campus))
+  const campusOptions = ['all', ...locations].map(loc => <option value={loc}>{loc}</option>)
+  
   const handleInputChange = event => {
-    // call setQuery in App.js via the prop
     setQuery(event.target.value)
   }
   const toggleTeachers = event => {
-    // call setQuery in App.js via the prop
     setTeachers(event.target.checked)
   }
   const toggleStudents = event => {
-    // call setQuery in App.js via the prop
     setStudents(event.target.checked)
   }
-  return (
+  const pickCampus = event => {
+    setCampus(event.target.value)
+  }
   
+  return (
     <div>
     <input type="text" onChange={handleInputChange} />
     <form>
-        <label>
-          Teachers
-          <input
-            name="isTeacher"
-            type="checkbox"
-            checked={teachers}
-            onChange={toggleTeachers} />
-        </label>
-        
-        <label>
-          Students
-          <input
-            name="isStudent"
-            type="checkbox"
-            checked={students}
-            onChange={toggleStudents} />
-        </label>
-        
-      </form>
-
+    <label>
+    Teachers
+    <input
+    name="isTeacher"
+    type="checkbox"
+    checked={teachers}
+    onChange={toggleTeachers} />
+    </label>
+    
+    <label>
+    Students
+    <input
+    name="isStudent"
+    type="checkbox"
+    checked={students}
+    onChange={toggleStudents} />
+    </label>
+    <label for="camps">Choose a campus</label>
+    
+    <select name="campus" id="campus" onChange={pickCampus}>
+    {campusOptions}
+    </select>
+    </form>
+    
     <table>
     <tr>
     <th>Name</th>
@@ -59,8 +67,9 @@ function App () {
     
     {[...users]
       .filter(user =>
-        (user.firstName.includes(query) || user.lastName.includes(query)) && 
-        ((students && user.role === 'student') || (teachers && user.role === 'teacher') )
+        (user.firstName.toLowerCase().includes(query) || user.lastName.toLowerCase().includes(query)) && 
+        ((students && user.role === 'student') || (teachers && user.role === 'teacher')) && 
+        ((user.campus === campus) || (campus === 'all'))
         )
         .map(user => 
           <tr>
@@ -71,7 +80,7 @@ function App () {
           </tr>
           )}
           </table>
-      </div>
+          </div>
           );
         }
         
