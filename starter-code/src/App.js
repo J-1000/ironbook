@@ -23,7 +23,7 @@ const App = () => {
         user.lastName.toLowerCase().includes(searchPerson.toLowerCase())
       )
     })
-    setSearch(searchPerson)
+    setSearch(search => search = searchPerson)
 
     if (searchPerson === '') {
       setShowAllUsers((users) => (users = showUsers))
@@ -61,6 +61,7 @@ const App = () => {
               <td>{user.lastName}</td>
               <td>{user.campus}</td>
               <td>{user.role}</td>
+              {user.linkedin ? 
               <td>
                 <a href={`/${user.linkedin}`}>
                   {' '}
@@ -70,7 +71,7 @@ const App = () => {
                     className='linkedin'
                   />{' '}
                 </a>
-              </td>
+              </td> : <td></td>}
             </tr>
           ))}
         </tbody>
