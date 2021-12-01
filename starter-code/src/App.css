@@ -30,3 +30,7 @@ td {
   justify-content: space-between;
   align-items: center;
 }
+
+#table {
+  padding-left: 200px;
+}
