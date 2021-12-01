@@ -1,13 +1,52 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import users from "./users";
 import linkedInImg from "./linkedin.png"
 
-class App extends React.Component {
+function App() {
 
 
-    render() {
-        return (
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isTeacher, setIsTeacher] = useState(false);
+    const [isStudent, setIsStudent] = useState(false);
+
+    const filteredUsers = (users, query, isStudent, isTeacher) => {
+
+        if (!query) return users;
+
+
+        users = users.filter(user => {
+            return user.firstName.toLowerCase().includes(query.toLowerCase())
+                || user.lastName.toLowerCase().includes(query.toLowerCase())
+        });
+
+        return users.filter(user => {
+            return (isTeacher && user.role === 'teacher' || false) || (isStudent && user.role === 'student' || false)
+
+        });
+    };
+
+    return (
+        <div className="wrapper">
+            <div style={{with: "100%"}} className="search">
+                <input style={{width: '40rem'}}
+                       placeholder="Search..."
+                       value={searchQuery}
+                       onChange={e => setSearchQuery(e.target.value)}>
+                </input>
+                <div>
+                    <label> Student
+                        <input onChange={e => setIsStudent(e.target.checked)} type="checkbox"
+                               checked={isStudent}></input>
+                    </label>
+
+                    <label> Teacher
+                        <input onChange={e => setIsTeacher(e.target.checked)} type="checkbox"
+                               checked={isTeacher}></input>
+                    </label>
+                </div>
+
+            </div>
             <div className="table-wrapper">
                 <table>
                     <tr>
@@ -17,7 +56,7 @@ class App extends React.Component {
                         <th>Role</th>
                         <th>Links</th>
                     </tr>
-                    {users.map(user =>
+                    {filteredUsers(users, searchQuery, isStudent, isTeacher).map(user =>
                         <tr>
                             <td>{user.firstName}</td>
                             <td>{user.lastName}</td>
@@ -30,8 +69,10 @@ class App extends React.Component {
                     )}
                 </table>
             </div>
-        );
-    }
+        </div>
+    )
+        ;
 }
 
 export default App;
+
