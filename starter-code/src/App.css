@@ -1,3 +1,7 @@
+*{
+  font-size: smaller;
+}
+
 body {
   margin: 0px;
   padding: 0px;
@@ -13,7 +17,7 @@ h1 {
   text-align: center;
 }
 
-thead {
+.thead {
   font-weight: 700;
 }
 
