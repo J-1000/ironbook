@@ -19,16 +19,21 @@ function App() {
   //render some HTML with Javacript
   // console.log(users)
   //creating a list of users ready to by displayed in the HTML
-  
+  const [campus, setCampus] = useState('All')
 
 
-
+  const handleCampusChange = event => {
+    
+    setCampus(event.target.value)
+    
+  }
+  console.log(campus)
   const handleSearchChange = event => {
     // console.log('Key pressed')
     setSearch(event.target.value)
     
   }
-
+  
   const handleStudentChange = () => {
     // console.log('I am checking the check box')
     if(!teacherRole){
@@ -58,6 +63,11 @@ function App() {
       return user.role==='teacher'
     })
   }
+  if(campus!=='All'){
+    results = results.filter(user => {
+      return campus === user.campus;
+    })
+  }
 
   const usersList = results.map(user => {
     return (
@@ -73,11 +83,20 @@ function App() {
   return (
   <div className="App">
     <h1>IronBook</h1>
+    
     <input type='text' value={search} onChange={handleSearchChange} style={{width: "80vw", margin: "0 30px 50px 30px"}} />
+    <br />
     <label htmlFor="studentRole">Student </label>
       <input type="checkbox" name="studentRole" id="studentRole" checked={studentRole} onChange={handleStudentChange} />
     <label htmlFor="teacherRole">Teacher </label>
       <input type="checkbox" name="teacherRole" id="teacherRole" checked={teacherRole} onChange={handleTeacherChange} />
+      <label htmlFor="campus">Campus:</label>
+            <select name="campus" id="campus" onChange={handleCampusChange}>
+              <option value="All">All</option>
+              <option value="Berlin">Berlin</option>
+              <option value="Lisbon">Lisbon</option>
+              <option value="Paris">Paris</option>
+            </select>
     <table id='table'>
        <thead>
          <tr>
