@@ -1,83 +1,62 @@
-import React, { useState } from 'react'
-import './App.css'
-import users from './users'
-import linkedinLogo from './linkedin.png'
+import React, { useState } from "react"
+import "./App.css"
+import users from "./users"
+import UserList from './components/UserList'
 import SearchBox from './components/SearchBox'
 import Checkbox from './components/Checkbox'
 import Select from './components/Select'
 
-const App = () => {
+function App() {
+  const [allUsers] = useState(users)
   const [search, setSearch] = useState('')
-  const [filteredUsers, setFilteredUsers] = useState([])
+  const [sortBy, setSortBy] = useState({ student: true, teacher: false })
   const [selectedCampus, setSelectedCampus] = useState('')
-  const [showAllUsers, setShowAllUsers] = useState(true)
-  const [sortBy, setSortBy] = useState('')
 
-  const showUsers = showAllUsers ? users : filteredUsers
-
-  const handleSearch = (event) => {
-    let searchPerson = event.target.value
-    let filteredUsers = users.filter((user) => {
-      return (
-        user.firstName.toLowerCase().includes(searchPerson.toLowerCase()) ||
-        user.lastName.toLowerCase().includes(searchPerson.toLowerCase())
-      )
-    })
-    setSearch(search => search = searchPerson)
-
-    if (searchPerson === '') {
-      setShowAllUsers((users) => (users = showUsers))
-    } else {
-      setFilteredUsers((filtered) => (filtered = filteredUsers))
-      setShowAllUsers((users) => (users = !showAllUsers))
+  const filteredUser = (user) => {
+    if (!sortBy[user.role]) {
+      return false
+    } else if (selectedCampus && user.campus !== selectedCampus) {
+      return false
     }
+    return (
+      user.firstName.toLowerCase().includes(search.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(search.toLowerCase())
+    )
   }
 
-  const handleSelectedCampus = (event) => {
-    let selectedCampus = event.target.value
+  const handleSearch = (event) => {
+    const searchPerson = event.target.value
+    setSearch(search => search = searchPerson)
+  }
+
+  const handleChecked = (event) => {
+    const { checked, name } = event.target
+    console.log(checked)
+    setSortBy((sortBy) => {
+      return {
+        ...sortBy,
+        [name]: checked,
+      }
+    })
   }
 
   return (
-    <div className='container'>
-      <div className=''>
+    <div className='app'>
+      <h1>IronBook</h1>
+      <div className='container'>
         <SearchBox search={search} handleSearch={handleSearch} />
-        <Checkbox />
-        <Select />
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Campus</th>
-            <th>Role</th>
-            <th>Links</th>
-          </tr>
-        </thead>
-        <tbody>
-          {showUsers.map((user, i) => (
-            <tr key={i}>
-              <td>{user.firstName}</td>
-              <td>{user.lastName}</td>
-              <td>{user.campus}</td>
-              <td>{user.role}</td>
-              {user.linkedin ? 
-              <td>
-                <a href={`/${user.linkedin}`}>
-                  {' '}
-                  <img
-                    src={linkedinLogo}
-                    alt='linkedin-logo'
-                    className='linkedin'
-                  />{' '}
-                </a>
-              </td> : <td></td>}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className='container'>
+        <Checkbox sortBy={sortBy} handleChecked={handleChecked} />
+        <Select setSelectedCampus={setSelectedCampus} users={allUsers} />
+      </div>
+
+      <div className='container'>
+        <UserList users={allUsers} filteredUser={filteredUser}/>
+      </div>
     </div>
   )
 }
 
-export default App
+export default App;
+

@@ -1,13 +1,22 @@
 import React from 'react'
 
-const Select = () => {
+const Select = ({ setSelectedCampus, users }) => {
+  const options = [...new Set(users.map((user) => user.campus))]
   return (
-    <div>
-      <label htmlFor='campus'>Campus</label>
-      <select name='campus'>
-        <option value=''></option>
-      </select>
-    </div>
+    <select
+      name='selectedCampus'
+      id='selectedCampus'
+      onChange={(e) => setSelectedCampus(e.target.value)}
+    >
+      <option>Campus</option>
+      {options.map((campus) => {
+        return (
+          <option key={campus} value={campus}>
+            {campus}
+          </option>
+        )
+      })}
+    </select>
   )
 }
 

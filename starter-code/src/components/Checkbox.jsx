@@ -1,17 +1,25 @@
 import React from 'react'
 
-const Checkbox = () => {
+const Checkbox = ({ sortBy, handleChecked }) => {
   return (
-    <div className="checkbox-container">
-      <div>
-        <input type="checkbox" id="student-checkbox"/>
-        <label htmlFor="student-checkbox">Student</label>
-      </div>
-      <div>
-        <input type="checkbox" id="teacher-checkbox"/>
-        <label htmlFor="teacher-checkbox">Teacher</label>
-      </div>
-    </div>
+    <>
+      <input
+        type='checkbox'
+        name='student'
+        onChange={handleChecked}
+        checked={sortBy.student}
+        id='student'
+      />
+      <label htmlFor='student'>Student</label>
+      <input
+        type='checkbox'
+        name='teacher'
+        checked={sortBy.teacher}
+        onChange={handleChecked}
+        id='teacher'
+      />
+      <label htmlFor='teacher'>Teacher</label>
+    </>
   )
 }
 
