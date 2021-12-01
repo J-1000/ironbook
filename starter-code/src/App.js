@@ -5,24 +5,21 @@ import linkedInImg from "./linkedin.png"
 
 function App() {
 
-
     const [searchQuery, setSearchQuery] = useState('');
     const [isTeacher, setIsTeacher] = useState(false);
     const [isStudent, setIsStudent] = useState(false);
+    const campusArr = [undefined, ...new Set(users.map((user) => user.campus))];
 
-    const filteredUsers = (users, query, isStudent, isTeacher) => {
+    const [campus, setCampus] = useState('');
 
-        if (!query) return users;
-
-
-        users = users.filter(user => {
-            return user.firstName.toLowerCase().includes(query.toLowerCase())
-                || user.lastName.toLowerCase().includes(query.toLowerCase())
-        });
+    const filteredUsers = (users, query, isStudent, isTeacher, campus) => {
 
         return users.filter(user => {
-            return (isTeacher && user.role === 'teacher' || false) || (isStudent && user.role === 'student' || false)
-
+            return (user.firstName.toLowerCase().includes(query.toLowerCase())
+                    || user.lastName.toLowerCase().includes(query.toLowerCase()))
+                && (user.campus === campus || !campus)
+                && ((isStudent) && user.role === 'student' || !isStudent)
+                && ((isTeacher) && user.role === 'teacher' || !isTeacher)
         });
     };
 
@@ -44,6 +41,15 @@ function App() {
                         <input onChange={e => setIsTeacher(e.target.checked)} type="checkbox"
                                checked={isTeacher}></input>
                     </label>
+
+                    <label> campus
+                        <select name="campus" onChange={e => setCampus(e.target.value)}>
+                            {campusArr.map(campus =>
+                                <option value={campus}>{campus}
+                                </option>)
+                            }
+                        </select>
+                    </label>
                 </div>
 
             </div>
@@ -56,7 +62,7 @@ function App() {
                         <th>Role</th>
                         <th>Links</th>
                     </tr>
-                    {filteredUsers(users, searchQuery, isStudent, isTeacher).map(user =>
+                    {filteredUsers(users, searchQuery, isStudent, isTeacher, campus).map(user =>
                         <tr>
                             <td>{user.firstName}</td>
                             <td>{user.lastName}</td>
