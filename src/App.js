@@ -13,17 +13,17 @@ function App() {
  
   //creating a list of users
   const usersList = users.map(user => {
-    return (
-      <tr>
-        <td>{user.firstName}</td>
-        <td>{user.lastName}</td>
-        <td>{user.campus}</td>
-        <td>{user.role}</td>
-        {user.linkedin && <td><a href={user.linkedin}>Linked In</a></td>}
-      </tr>
-    )
-  })
-    
+  return (
+    <tr>
+      <td>{user.firstName}</td>
+      <td>{user.lastName}</td>
+      <td>{user.campus}</td>
+      <td>{user.role}</td>
+      {user.linkedin && <td><a href={user.linkedin}>LinkedIn</a></td>}
+    </tr>
+  );
+})
+  
     return (
       <div className="App">
       <h1>IronBook</h1>
@@ -39,7 +39,6 @@ function App() {
           {usersList}
         </tbody>
       </table>
-      
     </div>
     );
     }
