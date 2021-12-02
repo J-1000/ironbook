@@ -1,9 +1,17 @@
 import React from 'react';
 
+
+
 const IronBook = props => {
 
-const list = props.user
+  if(props.checkedTeacherProp === true){
+    let list = props.user.filter(user => user.role === 'teacher')
+  }
+
+let list = props.user
 .filter(user => user.firstName.toLowerCase().includes(props.queryProp.toLowerCase()) || user.lastName.toLowerCase().includes(props.queryProp.toLowerCase()))
+.filter(user => user.campus.toLowerCase().includes(props.selectedProp))
+ 
 .map( user => {
 
     return (
