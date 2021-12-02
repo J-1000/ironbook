@@ -1,32 +1,24 @@
-body {
-  margin: 0px;
-  padding: 0px;
-  font-size: 20px;
+.TblCenter {
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.container {
-  display: flex;
-  justify-content: center;
+th, td {
+  padding: 10px;
 }
 
 h1 {
   text-align: center;
 }
 
-thead {
-  font-weight: 700;
+.input {
+  width: 300px;
+  margin-left: 20px;
+  
 }
-
-td {
-  padding: 20px;
-}
-
-.linkedin {
-  width: 20px;
-}
-
-.filters {
+.checkboxes {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  margin: 20px;
 }
