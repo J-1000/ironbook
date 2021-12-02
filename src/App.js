@@ -13,25 +13,76 @@ function App() {
   const [users, setUsers] = useState(() => setInitialValue())
   //state for search bar
   const [search, setSearch] = useState('')
+  // state for teacher search
+  const [isTeacher, setIsTeacher] = useState('false')
+  //state for student search
+  const [isStudent, setIsStudent] = useState('false')
+  //state for country search
+  const [campus, setCampus] = useState('All')
 
-
-  //search bar
+  //search 
   const handleSearch = event => {
     setSearch(event.target.value)
   }
-
+//define Search
   let newSearch = users.filter((user) => {
     return (user.firstName.toLowerCase() + user.lastName.toLowerCase()).includes(search)
   })
 
+  //teacher and student checkboxes
+  const handleTeacherSearch = event => {
+    setIsTeacher(event.target.checked)
+  }
+
+  if (isTeacher == true) {
+    newSearch = users.filter((user) => {
+      return user.role === 'teacher'
+    }
+    )
+  }
+
+  const handleStudentSearch = event => {
+    setIsStudent(event.target.checked)
+  }
+
+  if (isStudent == true) {
+    newSearch = users.filter((user) => {
+      return user.role === 'student'
+    }
+    )
+  }
+
+  //campus search
+  const handleCampusSearch = event => {
+    setCampus(event.target.value)
+  }
+
+  if(campus!== 'All') {
+    newSearch = newSearch.filter((user) => {
+      return campus=== user.campus
+    }
+      )
+  }
+
+
   return (
     <div className="App">
+      <h1>IronBook</h1>
       <form>
-        <input type='text' value={search} onChange={handleSearch} />
-
+        <input type='text' value={search} onChange={handleSearch} style={{ margin: '20px' }} placeholder='Search by name' /> <br></br>
+        <label htmlFor="">Teacher:</label>
+        <input type='checkbox' checked={isTeacher} onChange={handleTeacherSearch} />
+        <label htmlFor="">Student:</label> 
+        <input type='checkbox' checked={isStudent} onChange={handleStudentSearch} /> <br></br>
+        <label htmlFor="campus">Campus:</label>
+            <select name="campus" id="campus" onChange={handleCampusSearch} style={{ margin: '20px' }}>
+              <option value="All">All</option>
+              <option value="Berlin">Berlin</option>
+              <option value="Lisbon">Lisbon</option>
+              <option value="Paris">Paris</option>
+            </select>
       </form>
 
-      <h1>IronBook</h1>
       <table class='center'>
         <tr>
           <th>First Name</th>
