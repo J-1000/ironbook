@@ -22,7 +22,6 @@ function App() {
 
   const [selected, setSelected] = useState('');
 
-  console.log(checkedStudent)
     
     
     return (
