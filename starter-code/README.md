@@ -1,68 +1,76 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![logo_ironhack_blue 7](https://user-images.githubusercontent.com/23629340/40541063-a07a0a8a-601a-11e8-91b5-2f13e4e6b441.png)
 
-## Available Scripts
+# React | Ironbook
 
-In the project directory, you can run:
+In this exercise, we are going to create a book to display the list of people who did the bootcamp.
 
-### `npm start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Submission
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- Upon completion, run the following commands
 
-### `npm test`
+  ```
+  git add .
+  git commit -m "done"
+  git push origin master
+  ```
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Create Pull Request so your TAs can check up your work.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+You can create a new React application by doing:
 
-### `npm run eject`
+```
+$ npx create-react-app starter-code
+$ cd starter-code
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Then you can move the file `users.json` to `starter-code/src/users.json`.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Before starting
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+To make the exercise easier, create only 1 component `App`. We will learn later who to create more complex website with multiple components that communicate each other.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Instructions
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+### Iteration 1
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Display the list of all Ironhackers in a table. 
 
-### Analyzing the Bundle Size
+You don't have to use any state for this iteration. You can get the list of users by simply typing:
+```js
+import users from "./users";
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Make sure when you do this that the file  `users.json` is in `starter-code/src/users.json`.
 
-### Making a Progressive Web App
+This is a screenshot of what you can have by the end of the iteration.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+![img](https://i.imgur.com/4GAZGeQ.png)
 
-### Advanced Configuration
+As you can see, only some users have a LinkedIn link.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+### Iteration 2
 
-### Deployment
+Add a search bar to search by first name or last name. You should create a new state `search` for this iteration.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+![img](https://i.imgur.com/IEGLJds.png)
 
-### `npm run build` fails to minify
+### Iteration 3
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Add 2 checkboxes to search by type: "`teacher`" or "`student`". 
+
+![img](https://i.imgur.com/uzbjgkp.png)
+
+
+### Iteration 4
+
+Add a select to search by country.
+
+![img](https://i.imgur.com/FmBtj4C.png)

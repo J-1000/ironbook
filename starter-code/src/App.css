@@ -30,3 +30,21 @@ td {
   justify-content: space-between;
   align-items: center;
 }
+
+.search {
+  margin: 0 auto;
+  display: block;
+  width: 80%;
+}
+
+.student {
+  margin-left: 30px;
+}
+.teacher {
+  
+  margin-left: 30px;
+}
+
+.campus{
+  margin-left: 30px;
+}
