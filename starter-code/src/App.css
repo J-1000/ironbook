@@ -21,6 +21,17 @@ table {
   font-size: 18px;
   color: black;
 }
+.filter-section {
+  display: flex;
+  flex-direction: column;
+}
+.checkboxes-wrapper{
+  display: flex;
+  margin: 10px 0 10px 0;
+}
+.checkbox{
+  margin-right: 20px;
+}
 th {
   margin: 100px;
 }
