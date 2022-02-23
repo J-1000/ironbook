@@ -1,43 +1,99 @@
 import { useState } from 'react'
-import logo from './logo.svg'
 import './App.css'
+import users from './users.json'
+import img from './linkedin.png'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [search, setSearch] = useState('')
+  const [allUsers, setAllUsers] = useState(users)
+  const [teacher, setTeacher] = useState(false)
+  const [student, setStudent] = useState(false)
+  const [countries, setCountries] = useState('')
+
+  const inputHandler = (event) => {
+    setSearch(event.target.value.toLowerCase())
+    event.preventDefault()
+  }
+  console.log(student)
+
+  const handleTeacher = (event) => {
+    setTeacher(event.target.checked)
+  }
+
+  const handleStudent = (event) => {
+    setStudent(event.target.checked)
+  }
+  const handleCountry = (event) => {}
+  let searchTerm = allUsers.filter((arr) =>
+    `${arr.firstName}${arr.lastName}`.toLowerCase().includes(search)
+  )
+  searchTerm = searchTerm.filter((user) => {
+    if (teacher && student) {
+      return user
+    } else if (student) {
+      return user.role === 'student'
+    } else if (teacher) {
+      return user.role === 'teacher'
+    } else {
+      return true
+    }
+  })
+
+  // if (teacher === true && student === true) {
+  //   searchTerm = allUsers.filter((user) => {
+  //     return user
+  //   })
+  // }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div className='App'>
+      <form>
+        <input
+          type='text'
+          value={search}
+          onChange={inputHandler}
+          placeholder='search by name'
+        />
+        <label htmlFor=''>Teacher</label>
+        <input type='checkbox' checked={teacher} onChange={handleTeacher} />
+        <label htmlFor=''>Student</label>
+        <input type='checkbox' checked={student} onChange={handleStudent} />
+        {/* <select type='checkbox' value={countries} onChange={handleCountry}>
+          <option value='Paris'>paris</option>
+          <option value='Berlin'>Berlin</option>
+          <option value='Lisbon'>Lisbon</option>
+        </select> */}
+      </form>
+      <table>
+        <thead>
+          <tr>
+            <th>First-name</th>
+            <th>last-name</th>
+            <th>campus</th>
+            <th>role</th>
+            <th>links</th>
+          </tr>
+        </thead>
+        <tbody>
+          {searchTerm.map((user) => {
+            return (
+              <tr>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
+                <td>{user.campus}</td>
+                <td>{user.role}</td>
+                <td>
+                  {user.linkedin && (
+                    <a href={user.linkedin}>
+                      <img src={img} alt='linkedinlogo' style={{ width: 10 }} />
+                    </a>
+                  )}
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     </div>
   )
 }
