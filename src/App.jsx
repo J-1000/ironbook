@@ -6,10 +6,32 @@ import LIicon from './assets/linkedin-icon.svg';
 
 function App() {
   const [users, setUsers] = useState(usersArr);
-  console.log(users);
+  const [searchTerm, setSearchTerm] = useState('');
+  const handleSearchFieldChange = e => setSearchTerm(e.target.value);
+  const handleSearch = () => {
+    // console.log(users);
+
+    const filteredUsers = users.filter(user => {
+      return (
+        user.firstName.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0 ||
+        user.lastName.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0
+      );
+    });
+    setUsers(filteredUsers);
+  };
   return (
     <div className="App">
       <h1>IronBook</h1>
+      <input
+        type="text"
+        autoFocus
+        placeholder="Search by name or surname"
+        value={searchTerm}
+        onChange={handleSearchFieldChange}
+        onKeyUp={handleSearch}
+        // onKeyPress={e => e.key === 'Enter' && handleSearch()}
+        style={{ width: '90%', padding: '5px 10px' }}
+      />
       <table width="100%">
         <thead>
           <tr>
