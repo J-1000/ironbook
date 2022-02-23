@@ -8,6 +8,7 @@ function App() {
   const [users, setUsers] = useState(usersArr);
   const [searchTerm, setSearchTerm] = useState('');
   const [isStudent, setIsStudent] = useState(false);
+  const [isTeacher, setIsTeacher] = useState(false);
 
   const handleSearchFieldChange = e => setSearchTerm(e.target.value);
   const handleSearch = () => {
@@ -23,10 +24,12 @@ function App() {
   const handleIsStudentChange = e => {
     setIsStudent(e.target.checked);
     if (!isStudent) setUsers(users.filter(user => user.role === 'student'));
-    if (isStudent) {
-      setUsers(usersArr);
-      handleSearch();
-    }
+    if (isStudent) setUsers(usersArr);
+  };
+  const handleIsTeacherChange = e => {
+    setIsTeacher(e.target.checked);
+    if (!isTeacher) setUsers(users.filter(user => user.role === 'teacher'));
+    if (isTeacher) setUsers(usersArr);
   };
   return (
     <div className="App">
@@ -52,7 +55,12 @@ function App() {
           <label htmlFor="student" style={{ marginRight: '20px' }}>
             Student
           </label>
-          <input type="checkbox" id="teacher" />
+          <input
+            type="checkbox"
+            id="teacher"
+            value={isTeacher}
+            onChange={handleIsTeacherChange}
+          />
           <label htmlFor="teacher">Teacher</label>
         </div>
       </div>
