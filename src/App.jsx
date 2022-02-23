@@ -7,10 +7,10 @@ import LIicon from './assets/linkedin-icon.svg';
 function App() {
   const [users, setUsers] = useState(usersArr);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isStudent, setIsStudent] = useState(false);
+
   const handleSearchFieldChange = e => setSearchTerm(e.target.value);
   const handleSearch = () => {
-    // console.log(users);
-
     const filteredUsers = users.filter(user => {
       return (
         user.firstName.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0 ||
@@ -19,20 +19,44 @@ function App() {
     });
     setUsers(filteredUsers);
   };
+
+  const handleIsStudentChange = e => {
+    setIsStudent(e.target.checked);
+    if (!isStudent) setUsers(users.filter(user => user.role === 'student'));
+    if (isStudent) {
+      setUsers(usersArr);
+      handleSearch();
+    }
+  };
   return (
     <div className="App">
       <h1>IronBook</h1>
-      <input
-        type="text"
-        autoFocus
-        placeholder="Search by name or surname"
-        value={searchTerm}
-        onChange={handleSearchFieldChange}
-        onKeyUp={handleSearch}
-        // onKeyPress={e => e.key === 'Enter' && handleSearch()}
-        style={{ width: '90%', padding: '5px 10px' }}
-      />
-      <table width="100%">
+      <div>
+        <input
+          type="text"
+          autoFocus
+          placeholder="Search by name or surname"
+          value={searchTerm}
+          onChange={handleSearchFieldChange}
+          onKeyUp={handleSearch}
+          onKeyPress={e => e.key === 'Enter' && handleSearch()}
+          style={{ width: '90%', padding: '5px 10px' }}
+        />
+        <div style={{ float: 'left', marginLeft: '5%', padding: '20px 0px' }}>
+          <input
+            type="checkbox"
+            id="student"
+            value={isStudent}
+            onChange={handleIsStudentChange}
+          />
+          <label htmlFor="student" style={{ marginRight: '20px' }}>
+            Student
+          </label>
+          <input type="checkbox" id="teacher" />
+          <label htmlFor="teacher">Teacher</label>
+        </div>
+      </div>
+      <table width="70%">
         <thead>
           <tr>
             <th>First Name</th>
