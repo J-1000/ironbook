@@ -1,45 +1,45 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import usersArr from './users';
+import { uid } from 'uid/single';
+import LIicon from './assets/linkedin-icon.svg';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [users, setUsers] = useState(usersArr);
+  console.log(users);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <h1>IronBook</h1>
+      <table width="100%">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Campus</th>
+            <th>Role</th>
+            <th>Links</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map(user => (
+            <tr key={uid()}>
+              <td>{user.firstName}</td>
+              <td>{user.lastName}</td>
+              <td>{user.campus}</td>
+              <td>{user.role}</td>
+              <td>
+                {user.linkedin && (
+                  <a href={user.linkedin}>
+                    <img src={LIicon} alt="LinkedIn icon" height="20" />
+                  </a>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
