@@ -9,27 +9,32 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isStudent, setIsStudent] = useState(false);
   const [isTeacher, setIsTeacher] = useState(false);
+  const [campus, setCampus] = useState('');
 
   const handleSearchFieldChange = e => setSearchTerm(e.target.value);
-  const handleSearch = () => {
-    const filteredUsers = users.filter(user => {
-      return (
-        user.firstName.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0 ||
-        user.lastName.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0
-      );
-    });
-    setUsers(filteredUsers);
-  };
 
   const handleIsStudentChange = e => {
     setIsStudent(e.target.checked);
-    if (!isStudent) setUsers(users.filter(user => user.role === 'student'));
-    if (isStudent) setUsers(usersArr);
   };
   const handleIsTeacherChange = e => {
     setIsTeacher(e.target.checked);
     if (!isTeacher) setUsers(users.filter(user => user.role === 'teacher'));
     if (isTeacher) setUsers(usersArr);
+  };
+  const handleCampusChange = e => {
+    setCampus(e.target.value);
+  };
+  const filteredUsers = () => {
+    let prefilteredUsers = [...users];
+    if (isStudent) {
+      prefilteredUsers = users.filter(user => user.role === 'student');
+    }
+    return prefilteredUsers.filter(user => {
+      return (
+        user.firstName.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0 ||
+        user.lastName.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0
+      );
+    });
   };
   return (
     <div className="App">
@@ -41,9 +46,7 @@ function App() {
           placeholder="Search by name or surname"
           value={searchTerm}
           onChange={handleSearchFieldChange}
-          onKeyUp={handleSearch}
-          onKeyPress={e => e.key === 'Enter' && handleSearch()}
-          style={{ width: '90%', padding: '5px 10px' }}
+          style={{ width: '100%', padding: '5px 10px' }}
         />
         <div style={{ float: 'left', marginLeft: '5%', padding: '20px 0px' }}>
           <input
@@ -52,16 +55,25 @@ function App() {
             value={isStudent}
             onChange={handleIsStudentChange}
           />
-          <label htmlFor="student" style={{ marginRight: '20px' }}>
-            Student
-          </label>
+          <label htmlFor="student">Student</label>
           <input
             type="checkbox"
             id="teacher"
             value={isTeacher}
-            onChange={handleIsTeacherChange}
+            // onChange={handleIsTeacherChange}
           />
           <label htmlFor="teacher">Teacher</label>
+          <label htmlFor="campus">Campus</label>
+          <select
+            name="campus"
+            id="campus"
+            value={campus}
+            // onChange={handleCampusChange}
+          >
+            <option value="Paris">Paris</option>
+            <option value="Lisbon">Lisbon</option>
+            <option value="Berlin">Berlin</option>
+          </select>
         </div>
       </div>
       <table width="70%">
@@ -75,7 +87,7 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {users.map(user => (
+          {filteredUsers().map(user => (
             <tr key={uid()}>
               <td>{user.firstName}</td>
               <td>{user.lastName}</td>
