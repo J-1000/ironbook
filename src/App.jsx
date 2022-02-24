@@ -18,8 +18,6 @@ function App() {
   };
   const handleIsTeacherChange = e => {
     setIsTeacher(e.target.checked);
-    if (!isTeacher) setUsers(users.filter(user => user.role === 'teacher'));
-    if (isTeacher) setUsers(usersArr);
   };
   const handleCampusChange = e => {
     setCampus(e.target.value);
@@ -28,6 +26,9 @@ function App() {
     let prefilteredUsers = [...users];
     if (isStudent) {
       prefilteredUsers = users.filter(user => user.role === 'student');
+    }
+    if (isTeacher) {
+      prefilteredUsers = users.filter(user => user.role === 'teacher');
     }
     return prefilteredUsers.filter(user => {
       return (
@@ -60,7 +61,7 @@ function App() {
             type="checkbox"
             id="teacher"
             value={isTeacher}
-            // onChange={handleIsTeacherChange}
+            onChange={handleIsTeacherChange}
           />
           <label htmlFor="teacher">Teacher</label>
           <label htmlFor="campus">Campus</label>
