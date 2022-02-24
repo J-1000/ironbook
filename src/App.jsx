@@ -8,7 +8,7 @@ function App() {
   const [allUsers, setAllUsers] = useState(users)
   const [teacher, setTeacher] = useState(false)
   const [student, setStudent] = useState(false)
-  const [countries, setCountries] = useState('')
+  const [campus, setCampus] = useState('select campuses')
 
   const inputHandler = (event) => {
     setSearch(event.target.value.toLowerCase())
@@ -23,7 +23,9 @@ function App() {
   const handleStudent = (event) => {
     setStudent(event.target.checked)
   }
-  const handleCountry = (event) => {}
+  const handleCampus = (event) => {
+    setCampus(event.target.value)
+  }
   let searchTerm = allUsers.filter((arr) =>
     `${arr.firstName}${arr.lastName}`.toLowerCase().includes(search)
   )
@@ -38,12 +40,17 @@ function App() {
       return true
     }
   })
-
-  // if (teacher === true && student === true) {
-  //   searchTerm = allUsers.filter((user) => {
-  //     return user
-  //   })
-  // }
+  searchTerm = searchTerm.filter((user) => {
+    if (campus === 'Paris') {
+      return user.campus === 'Paris'
+    } else if (campus === 'Berlin') {
+      return user.campus === 'Berlin'
+    } else if (campus === 'Lisbon') {
+      return user.campus === 'Lisbon'
+    } else {
+      return true
+    }
+  })
 
   return (
     <div className='App'>
@@ -58,11 +65,12 @@ function App() {
         <input type='checkbox' checked={teacher} onChange={handleTeacher} />
         <label htmlFor=''>Student</label>
         <input type='checkbox' checked={student} onChange={handleStudent} />
-        {/* <select type='checkbox' value={countries} onChange={handleCountry}>
+        <select onChange={handleCampus}>
+          <option value='campus'>select a campus</option>
           <option value='Paris'>paris</option>
           <option value='Berlin'>Berlin</option>
           <option value='Lisbon'>Lisbon</option>
-        </select> */}
+        </select>
       </form>
       <table>
         <thead>
