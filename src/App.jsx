@@ -13,15 +13,12 @@ function App() {
 
   const handleSearchFieldChange = e => setSearchTerm(e.target.value);
 
-  const handleIsStudentChange = e => {
-    setIsStudent(e.target.checked);
-  };
-  const handleIsTeacherChange = e => {
-    setIsTeacher(e.target.checked);
-  };
-  const handleCampusChange = e => {
-    setCampus(e.target.value);
-  };
+  const handleIsStudentChange = e => setIsStudent(e.target.checked);
+
+  const handleIsTeacherChange = e => setIsTeacher(e.target.checked);
+
+  const handleCampusChange = e => setCampus(e.target.value);
+
   const filteredUsers = () => {
     let prefilteredUsers = [...users];
     if (isStudent) {
@@ -29,6 +26,9 @@ function App() {
     }
     if (isTeacher) {
       prefilteredUsers = users.filter(user => user.role === 'teacher');
+    }
+    if (campus) {
+      prefilteredUsers = users.filter(user => user.campus === campus);
     }
     return prefilteredUsers.filter(user => {
       return (
@@ -69,8 +69,9 @@ function App() {
             name="campus"
             id="campus"
             value={campus}
-            // onChange={handleCampusChange}
+            onChange={handleCampusChange}
           >
+            <option value="">Show all</option>
             <option value="Paris">Paris</option>
             <option value="Lisbon">Lisbon</option>
             <option value="Berlin">Berlin</option>
