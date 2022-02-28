@@ -7,81 +7,63 @@ function App() {
 
   let [users, setUsers] = useState(usersJson)
   let [search, setSearch] = useState('')
-  let [studentFilter, setStudentFilter] = useState(false)
-  let [teacherFilter, setTeacherFilter] = useState(false)
+  let [studentFilter, setStudentFilter] = useState(true)
+  let [teacherFilter, setTeacherFilter] = useState(true)
   let [campus, setCampus] = useState('All')
 
-  const handleSearchForm = event => {
-    event.preventDefault()
+    //setUsers(searchResults)
 
-    let searchResults = users.filter(user => {
-
-      if(user.firstName.toLowerCase().includes(search.toLowerCase()) || user.lastName.toLowerCase().includes(search.toLowerCase()))
-        return true
-    })
-
-    setUsers(searchResults)
-  }
-
-  const handleSearchChange = (event) =>{
+  const handleSearch = (event) =>{
     setSearch(event.target.value)
   }
 
-  const handleStudentFilter = () => {
-    if(studentFilter){
-      
-      setStudentFilter(false)
-      setUsers(usersJson)
-    }
-
-    else{
-      let filteredUsers = users.filter(user => {
-
-        if(user.role === 'student')
-          return true
-      })
-      setUsers(filteredUsers)
-      setStudentFilter(true)
-    }
+  const handleStudentFilter = (event) => {
+    setStudentFilter(event.target.checked)
   }
 
-  const handleTeacherFilter = () => {
-    if(teacherFilter){
-      setUsers(usersJson)
-      setTeacherFilter(false)
-    }
-
-    else{
-      let filteredUsers = users.filter(user => {
-
-        if(user.role === 'teacher')
-          return true
-      })
-      setUsers(filteredUsers)
-      setTeacherFilter(true)
-    }
+  const handleTeacherFilter = (event) => {
+    setTeacherFilter(event.target.checked)
   }
 
   const handleCampus = (event) => {
+    setCampus(event.target.value)
+  }
 
-    console.log(event.target.value)
-    setCampus(event.target.campus)
+  let results = usersJson.filter(user => {
 
-    let campusFilter = event.target.value
+    if(user.firstName.toLowerCase().includes(search.toLowerCase()) || user.lastName.toLowerCase().includes(search.toLowerCase()))
+      return true
+  })
 
-    if(campusFilter === 'All')
-      setUsers(usersJson)
+  results =results.filter(user => {
+    if(studentFilter && teacherFilter)
+      return true
+
+    else if(studentFilter){
+      if(user.role === 'student')
+        return true
+    }
+
+    else if(teacherFilter){
+      if(user.role === 'teacher')
+      return true
+    }
+      
+    else{
+      return false
+    }  
+  })
+
+  results = results.filter(user => {
+    if(campus !== 'All'){
+      if(user.campus == campus)
+        return true
+    }
 
     else{
-      let filteredCampus = users.filter(user => {
-
-        if(user.campus === campusFilter)
-          return true
-      })
-
-      setUsers(filteredCampus)
+      return true
     }
-  }
+  })
 
   return (
     <div className="App">
@@ -92,18 +74,18 @@ function App() {
           </tr>
           <tr>
             <th colSpan="5">
-              <form onSubmit={handleSearchForm}>
-                <input type="text" value={search} onChange={handleSearchChange} placeholder="Search by Name"/>
+              <form>
+                <input type="text" value={search} onChange={handleSearch} placeholder="Search by Name"/>
               </form>
             </th>          
           </tr>
           <tr>
             <th>             
-              <input type="checkbox" onChange={handleStudentFilter}/>
+              <input type="checkbox" checked={studentFilter} onChange={handleStudentFilter}/>
               <label>Student</label>
             </th>
             <th>
-              <input type="checkbox" onChange={handleTeacherFilter}/>
+              <input type="checkbox" checked={teacherFilter} onChange={handleTeacherFilter}/>
               <label>Teacher</label>
             </th>
             <th>
@@ -126,12 +108,12 @@ function App() {
         </thead>
         <tbody>
 
-          {users.map((user, index) => {
+          {results.map((user, index) => {
             return(
 
             <tr key={index}>
                 <td>{user.firstName}</td>
-                <td>{(user.lastName)}</td>
+                <td>{user.lastName}</td>
                 <td>{user.campus}</td>
                 <td>{user.role}</td>
                <td>{user.linkedin && <img src={linkedinIcon} className="linkedinIcon"/>}</td>
