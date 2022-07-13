@@ -1,45 +1,77 @@
 import { useState } from 'react'
-import logo from './logo.svg'
 import './App.css'
+import usersData from "./users.json";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  //Iteration 1
+  const [users, setUsers] = useState(usersData)
+
+  //Iteration 2
+  const [input, setInput] = useState('')
+  const handleChangeFilter = event => {
+    setInput(event.target.value)
+  }
+
+  //Iteration 3
+  const [isStudent, setIsStudent] = useState(false)
+  const handleIsStudent = event => {
+    setIsStudent(event.target.checked)
+  }
+
+
+
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <h1>IronBook</h1>
+
+      <form>
+        <input type="text" value={input} onChange={handleChangeFilter} />
+      </form>
+
+
+
+      <table key={users.id}>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Campus</th>
+            <th>Role</th>
+            <th>Links</th>
+          </tr>
+        </thead>
+        <tbody>
+
+
+          {users.filter((user) => {
+
+            if (input === '') {
+              return user
+            } else {
+              return user.firstName.toLowerCase().includes(input) || user.lastName.toLowerCase().includes(input)
+            }
+
+          }).map(function (user) {
+            return (
+
+              <tr>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
+                <td>{user.campus}</td>
+                <td>{user.role}</td>
+              </tr>
+            )
+          })}
+
+        </tbody>
+      </table>
+
     </div>
   )
 }
 
 export default App
+
