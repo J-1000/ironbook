@@ -1,45 +1,40 @@
 import { useState } from 'react'
-import logo from './logo.svg'
 import './App.css'
+import userData from "./users.json";
+import LinkedInBadge from "./linkedin.png"
 
 function App() {
-  const [count, setCount] = useState(0)
-
+const [users, setUsers] = useState(userData)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <table>
+      <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Campus</th>
+        <th>Role</th>
+        <th>Link</th>
+      </tr>
+      <tbody>
+      {users.map((user) => (
+        <tr key={user.id}>
+          <td>{user.firstName}</td>
+          <td>{user.lastName}</td>
+          <td>{user.campus}</td>
+          <td>{user.role}</td>
+          <td>
+            {user.linkedin ? <a href={user.linkedin} target="_blank">
+              <img src={LinkedInBadge} alt="LinkedIn Badge" width="20px"/>
+            </a> : null}
+          </td>
+        </tr>
+      ))}
+      </tbody>
+    </table>
     </div>
   )
 }
 
-export default App
+export default App;
+
+
