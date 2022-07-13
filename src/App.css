@@ -40,3 +40,27 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+
+table{
+  width:100%;
+  padding:5vh 20% 10vh 20%;
+}
+
+thead{
+  font-size: 1.2em;
+  padding-bottom: 3vh;
+}
+
+h1 {
+  font-size: 84px;
+  background: -webkit-linear-gradient(#eee, #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+form{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+padding-bottom: 5vh;
+}
