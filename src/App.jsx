@@ -70,7 +70,7 @@ function App() {
           <tbody>
               {usersList
               .filter(user => {
-                return user.lastName.includes(search);
+                return user.lastName.toLowerCase().includes(search.toLowerCase()) || user.firstName.toLowerCase().includes(search.toLowerCase());
               })
               .filter(user => {
                 if (isTeacher && user.role !== 'teacher') {
