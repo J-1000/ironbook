@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.Table {
+  display: flex;
+  justify-content: center;
+}
+
+.Input {
+  width: 80vw;
+}
+
+.Checkbox {
+  margin: 20px 10px;
+}
